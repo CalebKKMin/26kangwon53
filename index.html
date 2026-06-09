@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>2026년 53교구 강원도 국내전도</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Malgun Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f7f4; color: #2d3748; min-height: 100vh; -webkit-text-size-adjust: 100%; }
+
+header {
+  background: linear-gradient(135deg, #1a3a2f 0%, #276749 55%, #2f855a 100%);
+  color: white; padding: 22px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  position: relative; overflow: hidden;
+}
+header::before {
+  content: ''; position: absolute; right: -40px; top: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+header::after {
+  content: ''; position: absolute; right: 40px; bottom: -50px;
+  width: 100px; height: 100px; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+header h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.5px; position: relative; }
+header .subtitle { margin-top: 5px; font-size: 0.83rem; opacity: 0.82; position: relative; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 18px 14px 40px; }
+
+/* Search Box */
+.search-box {
+  background: white; border-radius: 14px; padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08); margin-bottom: 14px;
+}
+.search-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.search-input-wrap { flex: 1; min-width: 160px; position: relative; }
+.search-input-wrap svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: #a0aec0; pointer-events: none; flex-shrink: 0; }
+.search-input-wrap input {
+  width: 100%; padding: 9px 14px 9px 36px;
+  border: 2px solid #e2e8f0; border-radius: 9px;
+  font-size: 0.95rem; font-family: inherit; outline: none;
+  transition: border-color 0.2s; -webkit-appearance: none; appearance: none;
+}
+.search-input-wrap input:focus { border-color: #38a169; }
+
+.btn-reset {
+  padding: 9px 14px; background: #edf2f7; border: none;
+  border-radius: 9px; font-family: inherit; font-size: 0.85rem;
+  cursor: pointer; color: #4a5568; transition: background 0.15s;
+  white-space: nowrap; -webkit-appearance: none; touch-action: manipulation;
+}
+.btn-reset:hover { background: #e2e8f0; }
+
+.view-toggle { display: flex; gap: 4px; }
+.view-btn {
+  padding: 8px 13px; border: 1.5px solid #cbd5e0; border-radius: 8px;
+  background: white; font-family: inherit; font-size: 0.83rem;
+  cursor: pointer; color: #718096; transition: all 0.15s; white-space: nowrap;
+  -webkit-appearance: none; touch-action: manipulation;
+}
+.view-btn.active { background: #276749; border-color: #276749; color: white; font-weight: 600; }
+.view-btn:not(.active):hover { border-color: #276749; color: #276749; }
+
+.filter-row { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filter-label { font-size: 0.78rem; color: #718096; font-weight: 700; white-space: nowrap; letter-spacing: 0.3px; }
+.chip-group { display: flex; gap: 5px; flex-wrap: wrap; }
+.chip {
+  padding: 5px 12px; border-radius: 999px; border: 1.5px solid #cbd5e0;
+  background: white; font-family: inherit; font-size: 0.79rem;
+  cursor: pointer; color: #4a5568; transition: all 0.15s; white-space: nowrap;
+  -webkit-appearance: none; touch-action: manipulation;
+}
+.chip:hover { border-color: #38a169; color: #276749; }
+.chip.active { background: #276749; border-color: #276749; color: white; font-weight: 600; }
+.chip.female:hover { border-color: #d53f8c; color: #d53f8c; }
+.chip.female.active { background: #d53f8c; border-color: #d53f8c; }
+.filter-divider { width: 1px; background: #e2e8f0; align-self: stretch; margin: 0 2px; flex-shrink: 0; }
+
+/* Stats */
+.stats-section { margin-bottom: 14px; }
+.stats-top { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.stat-card {
+  background: white; border-radius: 10px; padding: 12px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07); display: flex;
+  align-items: center; gap: 10px; flex: 1; min-width: 90px;
+}
+.stat-icon { font-size: 1.3rem; opacity: 0.75; }
+.stat-info { display: flex; flex-direction: column; }
+.stat-num { font-size: 1.5rem; font-weight: 700; color: #276749; line-height: 1.1; }
+.stat-label { font-size: 0.75rem; color: #718096; margin-top: 1px; }
+.stat-card.male .stat-num { color: #2b6cb0; }
+.stat-card.female .stat-num { color: #d53f8c; }
+
+.year-breakdown {
+  background: white; border-radius: 10px; padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.year-breakdown-title {
+  font-size: 0.77rem; color: #718096; font-weight: 700;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.year-breakdown-title small { font-weight: 400; font-size: 0.72rem; color: #a0aec0; }
+.year-table { display: flex; gap: 6px; flex-wrap: wrap; }
+.year-cell {
+  background: #f0f7f4; border-radius: 9px; padding: 8px 10px;
+  text-align: center; cursor: pointer; transition: all 0.15s;
+  border: 1.5px solid transparent; min-width: 68px; flex: 1;
+  max-width: 110px;
+}
+.year-cell:hover { border-color: #276749; background: #e2f5ec; }
+.year-cell.active { background: #276749; border-color: #276749; color: white; }
+.yc-year { font-size: 0.8rem; font-weight: 700; margin-bottom: 2px; }
+.yc-count { font-size: 1.25rem; font-weight: 700; color: #276749; line-height: 1.1; }
+.year-cell.active .yc-count { color: white; }
+.yc-bar { display: flex; height: 4px; border-radius: 2px; overflow: hidden; background: #d4edda; margin: 4px 0 3px; }
+.yc-bar-m { background: #2b6cb0; height: 100%; transition: width 0.3s; }
+.yc-bar-f { background: #d53f8c; height: 100%; transition: width 0.3s; }
+.year-cell.active .yc-bar { background: rgba(255,255,255,0.3); }
+.year-cell.active .yc-bar-m { background: #90cdf4; }
+.year-cell.active .yc-bar-f { background: #fbb6ce; }
+.yc-detail { font-size: 0.68rem; color: #718096; white-space: nowrap; }
+.year-cell.active .yc-detail { color: rgba(255,255,255,0.8); }
+.yc-zero { opacity: 0.45; }
+
+/* No results */
+.no-results {
+  text-align: center; padding: 60px 20px; color: #a0aec0;
+  background: white; border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.no-results .nr-icon { font-size: 3rem; margin-bottom: 10px; opacity: 0.5; }
+.no-results p { font-size: 0.95rem; }
+
+/* Card Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: 12px;
+}
+.person-card {
+  background: white; border-radius: 13px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.08); overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.person-card:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0,0,0,0.13); }
+.card-avatar-wrap {
+  width: 100%; padding: 20px 0 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-avatar {
+  width: 70px; height: 70px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; font-weight: 800; color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.card-body { padding: 0 10px 14px; text-align: center; }
+.card-name { font-weight: 700; font-size: 0.97rem; margin-bottom: 7px; color: #2d3748; }
+.card-badges { display: flex; justify-content: center; align-items: center; gap: 4px; flex-wrap: wrap; }
+
+/* List View */
+.table-wrap { background: white; border-radius: 14px; box-shadow: 0 1px 5px rgba(0,0,0,0.08); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  background: #f7faf9; padding: 10px 14px; text-align: left;
+  font-size: 0.78rem; font-weight: 700; color: #718096;
+  border-bottom: 2px solid #e2e8f0; white-space: nowrap; letter-spacing: 0.3px;
+}
+thead th.c { text-align: center; }
+tbody tr { border-bottom: 1px solid #f0f4f8; transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f4fbf7; }
+td { padding: 9px 14px; font-size: 0.9rem; vertical-align: middle; }
+td.c { text-align: center; }
+.list-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; font-weight: 800; color: white; flex-shrink: 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.name-cell { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.93rem; }
+
+/* Badges */
+.badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 0.73rem; font-weight: 600; }
+.badge-year { background: #e6f4ee; color: #276749; }
+.badge-male { background: #ebf8ff; color: #2b6cb0; }
+.badge-female { background: #fff0f6; color: #b83280; }
+.row-num { color: #cbd5e0; font-size: 0.8rem; }
+
+/* Results header */
+.results-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; flex-wrap: wrap; gap: 6px;
+}
+.results-count { font-size: 0.83rem; color: #718096; font-weight: 600; }
+.results-count span { color: #276749; font-weight: 700; }
+
+/* Responsive */
+@media (max-width: 520px) {
+  header h1 { font-size: 1.2rem; }
+  .card-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+  .year-cell { min-width: 56px; padding: 7px 8px; }
+  .yc-count { font-size: 1.1rem; }
+  .stat-num { font-size: 1.3rem; }
+  .stat-icon { font-size: 1.1rem; }
+}
+@media (max-width: 360px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>2026년 53교구 강원도 국내전도</h1>
+  <p class="subtitle" id="headerSubtitle">전체 33명 · 형제 15명 · 자매 18명</p>
+</header>
+
+<div class="container">
+
+  <!-- 검색/필터 -->
+  <div class="search-box">
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="이름으로 검색..." oninput="doFilter()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <button class="btn-reset" onclick="resetFilter()">초기화</button>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btnCard" onclick="setView('card')">카드</button>
+        <button class="view-btn" id="btnList" onclick="setView('list')">목록</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">또래</span>
+      <div class="chip-group" id="yearChips"></div>
+      <div class="filter-divider"></div>
+      <span class="filter-label">성별</span>
+      <div class="chip-group" id="genderChips">
+        <button class="chip active" data-gender="all" onclick="setGender('all')">전체</button>
+        <button class="chip" data-gender="형제" onclick="setGender('형제')">형제</button>
+        <button class="chip female" data-gender="자매" onclick="setGender('자매')">자매</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 통계 요약 -->
+  <div class="stats-section">
+    <div class="stats-top">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <span class="stat-num" id="statTotal">33</span>
+          <span class="stat-label">전체</span>
+        </div>
+      </div>
+      <div class="stat-card male">
+        <div class="stat-icon">🙋</div>
+        <div class="stat-info">
+          <span class="stat-num" id="statMale">15</span>
+          <span class="stat-label">형제</span>
+        </div>
+      </div>
+      <div class="stat-card female">
+        <div class="stat-icon">🙋‍♀️</div>
+        <div class="stat-info">
+          <span class="stat-num" id="statFemale">18</span>
+          <span class="stat-label">자매</span>
+        </div>
+      </div>
+    </div>
+    <div class="year-breakdown">
+      <div class="year-breakdown-title">
+        또래별 현황
+        <small>(클릭하면 해당 또래만 보기)</small>
+      </div>
+      <div class="year-table" id="yearTable"></div>
+    </div>
+  </div>
+
+  <!-- 결과 헤더 -->
+  <div class="results-header">
+    <div class="results-count" id="resultsCount"><span>33</span>명 표시 중</div>
+  </div>
+
+  <!-- 카드 뷰 -->
+  <div id="cardView" class="card-grid"></div>
+
+  <!-- 목록 뷰 -->
+  <div id="listView" class="table-wrap" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th class="c">#</th>
+          <th>이름</th>
+          <th class="c">또래</th>
+          <th class="c">성별</th>
+        </tr>
+      </thead>
+      <tbody id="listBody"></tbody>
+    </table>
+  </div>
+
+  <!-- 결과 없음 -->
+  <div id="noResults" class="no-results" style="display:none">
+    <div class="nr-icon">🔍</div>
+    <p>검색 결과가 없습니다.</p>
+  </div>
+
+</div>
+
+<script>
+const MEMBERS = [
+  {name:"강다은",  year:"97", gender:"자매"},
+  {name:"강단영",  year:"95", gender:"자매"},
+  {name:"김가연",  year:"97", gender:"형제"},
+  {name:"김계령",  year:"97", gender:"자매"},
+  {name:"김기은",  year:"95", gender:"자매"},
+  {name:"김남주",  year:"00", gender:"형제"},
+  {name:"김민제",  year:"97", gender:"형제"},
+  {name:"김준구",  year:"97", gender:"형제"},
+  {name:"김지혜",  year:"95", gender:"자매"},
+  {name:"김현아",  year:"97", gender:"자매"},
+  {name:"문혜진",  year:"99", gender:"자매"},
+  {name:"박지수",  year:"98", gender:"자매"},
+  {name:"신이삭",  year:"96", gender:"형제"},
+  {name:"신향",    year:"97", gender:"자매"},
+  {name:"신현우",  year:"95", gender:"형제"},
+  {name:"신형욱",  year:"99", gender:"형제"},
+  {name:"안주현",  year:"98", gender:"자매"},
+  {name:"양혜정",  year:"97", gender:"자매"},
+  {name:"유진영",  year:"98", gender:"자매"},
+  {name:"윤빈",    year:"95", gender:"형제"},
+  {name:"이경은",  year:"99", gender:"자매"},
+  {name:"이성하",  year:"98", gender:"형제"},
+  {name:"이세인",  year:"97", gender:"자매"},
+  {name:"이예나",  year:"94", gender:"자매"},
+  {name:"이종원",  year:"98", gender:"형제"},
+  {name:"인장호",  year:"96", gender:"형제"},
+  {name:"장유신",  year:"99", gender:"형제"},
+  {name:"정서영",  year:"00", gender:"자매"},
+  {name:"지예광",  year:"98", gender:"형제"},
+  {name:"최각규",  year:"95", gender:"형제"},
+  {name:"최현정",  year:"95", gender:"형제"},
+  {name:"홍석희",  year:"97", gender:"자매"},
+  {name:"홍은경",  year:"94", gender:"자매"},
+];
+
+const YEARS = ["94","95","96","97","98","99","00"];
+
+const COLORS_M = ["#2b6cb0","#2c7a7b","#276749","#553c9a","#c05621","#5a67d8"];
+const COLORS_F = ["#d53f8c","#c05621","#9c4221","#702459","#2f855a","#b7791f"];
+
+let state = { search: "", year: "all", gender: "all", view: "card" };
+
+function avatarColor(name, gender) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+  return gender === "자매" ? COLORS_F[h % COLORS_F.length] : COLORS_M[h % COLORS_M.length];
+}
+
+function buildYearChips() {
+  const wrap = document.getElementById("yearChips");
+  let html = '<button class="chip active" data-year="all" onclick="setYear(\'all\')">전체</button>';
+  YEARS.forEach(y => {
+    html += `<button class="chip" data-year="${y}" onclick="setYear('${y}')">${y}년</button>`;
+  });
+  wrap.innerHTML = html;
+}
+
+function setYear(y) {
+  state.year = (state.year === y && y !== "all") ? "all" : y;
+  syncYearChips();
+  doFilter();
+}
+
+function setGender(g) {
+  state.gender = g;
+  document.querySelectorAll('#genderChips .chip').forEach(c =>
+    c.classList.toggle('active', c.dataset.gender === g));
+  doFilter();
+}
+
+function setView(v) {
+  state.view = v;
+  document.getElementById('btnCard').classList.toggle('active', v === 'card');
+  document.getElementById('btnList').classList.toggle('active', v === 'list');
+  renderResults(getFiltered());
+}
+
+function syncYearChips() {
+  document.querySelectorAll('#yearChips .chip').forEach(c =>
+    c.classList.toggle('active', c.dataset.year === state.year));
+}
+
+function resetFilter() {
+  state.search = ""; state.year = "all"; state.gender = "all";
+  document.getElementById("searchInput").value = "";
+  syncYearChips();
+  document.querySelectorAll('#genderChips .chip').forEach(c =>
+    c.classList.toggle('active', c.dataset.gender === 'all'));
+  doFilter();
+}
+
+function doFilter() {
+  state.search = document.getElementById("searchInput").value.trim();
+  const filtered = getFiltered();
+  updateStats(filtered);
+  renderResults(filtered);
+  updateHeader(filtered);
+}
+
+function getFiltered() {
+  const q = state.search.toLowerCase();
+  return MEMBERS.filter(m => {
+    if (q && !m.name.toLowerCase().includes(q)) return false;
+    if (state.year !== "all" && m.year !== state.year) return false;
+    if (state.gender !== "all" && m.gender !== state.gender) return false;
+    return true;
+  });
+}
+
+function updateHeader(filtered) {
+  const total = filtered.length;
+  const male = filtered.filter(m => m.gender === "형제").length;
+  const female = filtered.filter(m => m.gender === "자매").length;
+  const isFiltered = state.search || state.year !== "all" || state.gender !== "all";
+  document.getElementById("headerSubtitle").textContent =
+    isFiltered
+      ? `검색결과 ${total}명 · 형제 ${male}명 · 자매 ${female}명`
+      : `전체 ${total}명 · 형제 ${male}명 · 자매 ${female}명`;
+}
+
+function updateStats(filtered) {
+  const total = filtered.length;
+  const male = filtered.filter(m => m.gender === "형제").length;
+  const female = filtered.filter(m => m.gender === "자매").length;
+  document.getElementById("statTotal").textContent = total;
+  document.getElementById("statMale").textContent = male;
+  document.getElementById("statFemale").textContent = female;
+  document.getElementById("resultsCount").innerHTML = `<span>${total}</span>명 표시 중`;
+
+  const yearTable = document.getElementById("yearTable");
+  yearTable.innerHTML = YEARS.map(y => {
+    const group = filtered.filter(m => m.year === y);
+    const cnt = group.length;
+    const m = group.filter(p => p.gender === "형제").length;
+    const f = group.filter(p => p.gender === "자매").length;
+    const isActive = state.year === y;
+    const mPct = cnt > 0 ? Math.round(m / cnt * 100) : 0;
+    const fPct = cnt > 0 ? (100 - mPct) : 0;
+    const detail = cnt > 0 ? `형제${m}·자매${f}` : "–";
+    const zeroClass = cnt === 0 ? " yc-zero" : "";
+    return `<div class="year-cell${isActive ? ' active' : ''}${zeroClass}" data-year="${y}" onclick="setYear('${y}')">
+      <div class="yc-year">${y}년</div>
+      <div class="yc-count">${cnt}</div>
+      <div class="yc-bar"><div class="yc-bar-m" style="width:${mPct}%"></div><div class="yc-bar-f" style="width:${fPct}%"></div></div>
+      <div class="yc-detail">${detail}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderCard(m) {
+  const color = avatarColor(m.name, m.gender);
+  const bg = color + '18';
+  const isFemale = m.gender === "자매";
+  return `<div class="person-card">
+    <div class="card-avatar-wrap" style="background:${bg}">
+      <div class="card-avatar" style="background:${color}">${m.name[0]}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${m.name}</div>
+      <div class="card-badges">
+        <span class="badge badge-year">${m.year}년</span>
+        <span class="badge ${isFemale ? 'badge-female' : 'badge-male'}">${m.gender}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderListRow(m, idx) {
+  const color = avatarColor(m.name, m.gender);
+  const isFemale = m.gender === "자매";
+  return `<tr>
+    <td class="c"><span class="row-num">${idx + 1}</span></td>
+    <td><div class="name-cell">
+      <div class="list-avatar" style="background:${color}">${m.name[0]}</div>
+      ${m.name}
+    </div></td>
+    <td class="c"><span class="badge badge-year">${m.year}년</span></td>
+    <td class="c"><span class="badge ${isFemale ? 'badge-female' : 'badge-male'}">${m.gender}</span></td>
+  </tr>`;
+}
+
+function renderResults(filtered) {
+  const noResults = document.getElementById("noResults");
+  const cardView = document.getElementById("cardView");
+  const listView = document.getElementById("listView");
+
+  if (filtered.length === 0) {
+    noResults.style.display = 'block';
+    cardView.style.display = 'none';
+    listView.style.display = 'none';
+    return;
+  }
+
+  noResults.style.display = 'none';
+  if (state.view === 'card') {
+    cardView.style.display = 'grid';
+    listView.style.display = 'none';
+    cardView.innerHTML = filtered.map(m => renderCard(m)).join('');
+  } else {
+    cardView.style.display = 'none';
+    listView.style.display = 'block';
+    document.getElementById("listBody").innerHTML = filtered.map((m, i) => renderListRow(m, i)).join('');
+  }
+}
+
+// 초기화
+buildYearChips();
+doFilter();
+</script>
+</body>
+</html>
