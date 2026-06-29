@@ -23,7 +23,6 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 
 .container { max-width:1100px; margin:0 auto; padding:18px 14px 50px; }
 
-/* Search Box */
 .search-box { background:white; border-radius:14px; padding:16px 18px; box-shadow:0 1px 6px rgba(0,0,0,0.08); margin-bottom:14px; }
 .search-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
 .search-input-wrap { flex:1; min-width:160px; position:relative; }
@@ -45,9 +44,12 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .chip.active { background:#276749; border-color:#276749; color:white; font-weight:600; }
 .chip.female:hover { border-color:#d53f8c; color:#d53f8c; }
 .chip.female.active { background:#d53f8c; border-color:#d53f8c; }
+.chip.byeok:hover { border-color:#6b46c1; color:#6b46c1; }
+.chip.byeok.active { background:#6b46c1; border-color:#6b46c1; color:white; }
+.chip.siksa:hover { border-color:#c05621; color:#c05621; }
+.chip.siksa.active { background:#c05621; border-color:#c05621; color:white; }
 .filter-divider { width:1px; background:#e2e8f0; align-self:stretch; margin:0 2px; flex-shrink:0; }
 
-/* Stats */
 .stats-section { margin-bottom:14px; }
 .stats-top { display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
 .stat-card { background:white; border-radius:10px; padding:12px 18px; box-shadow:0 1px 4px rgba(0,0,0,0.07); display:flex; align-items:center; gap:10px; flex:1; min-width:90px; }
@@ -78,39 +80,29 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .year-cell.active .yc-detail { color:rgba(255,255,255,0.8); }
 .yc-zero { opacity:0.45; }
 
-/* No results */
 .no-results { text-align:center; padding:60px 20px; color:#a0aec0; background:white; border-radius:14px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .no-results .nr-icon { font-size:3rem; margin-bottom:10px; opacity:0.5; }
 .no-results p { font-size:0.95rem; }
 
-/* Results count */
 .results-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:6px; }
 .results-count { font-size:0.83rem; color:#718096; font-weight:600; }
 .results-count span { color:#276749; font-weight:700; }
 
-/* ── Card Grid ── */
 .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(148px, 1fr)); gap:12px; }
-
 .person-card { background:white; border-radius:14px; box-shadow:0 1px 5px rgba(0,0,0,0.09); overflow:hidden; transition:transform 0.15s, box-shadow 0.15s; }
 .person-card:hover { transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.13); }
-
-/* photo area */
 .card-photo-wrap { width:100%; aspect-ratio:3/4; position:relative; overflow:hidden; background:#e8f3ee; cursor:pointer; }
 .card-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform 0.3s; }
 .card-photo-wrap:hover img { transform:scale(1.04); }
 .card-avatar-fallback { position:absolute; inset:0; display:none; align-items:center; justify-content:center; }
 .card-avatar { width:72px; height:72px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.7rem; font-weight:800; color:white; text-shadow:0 1px 3px rgba(0,0,0,0.2); box-shadow:0 3px 8px rgba(0,0,0,0.15); }
-
-/* gender color strip at top of card */
 .card-strip { height:4px; }
 .card-strip.male  { background:linear-gradient(90deg,#2b6cb0,#63b3ed); }
 .card-strip.female{ background:linear-gradient(90deg,#d53f8c,#f687b3); }
-
 .card-body { padding:9px 10px 13px; text-align:center; }
 .card-name { font-weight:700; font-size:0.97rem; margin-bottom:7px; color:#2d3748; }
 .card-badges { display:flex; justify-content:center; align-items:center; gap:4px; flex-wrap:wrap; }
 
-/* ── List View ── */
 .table-wrap { background:white; border-radius:14px; box-shadow:0 1px 5px rgba(0,0,0,0.08); overflow:hidden; }
 table { width:100%; border-collapse:collapse; }
 thead th { background:#f7faf9; padding:10px 14px; text-align:left; font-size:0.78rem; font-weight:700; color:#718096; border-bottom:2px solid #e2e8f0; white-space:nowrap; }
@@ -120,7 +112,6 @@ tbody tr:last-child { border-bottom:none; }
 tbody tr:hover { background:#f4fbf7; }
 td { padding:8px 14px; font-size:0.9rem; vertical-align:middle; }
 td.c { text-align:center; }
-
 .list-photo-wrap { width:42px; height:54px; border-radius:8px; overflow:hidden; flex-shrink:0; background:#e8f3ee; position:relative; cursor:pointer; }
 .list-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
 .list-avatar-fallback { position:absolute; inset:0; display:none; align-items:center; justify-content:center; }
@@ -128,13 +119,14 @@ td.c { text-align:center; }
 .name-cell { display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.93rem; }
 .row-num { color:#cbd5e0; font-size:0.8rem; }
 
-/* Badges */
 .badge { display:inline-block; padding:3px 9px; border-radius:999px; font-size:0.73rem; font-weight:600; }
-.badge-year   { background:#e6f4ee; color:#276749; }
-.badge-male   { background:#ebf8ff; color:#2b6cb0; }
-.badge-female { background:#fff0f6; color:#b83280; }
+.badge-year       { background:#e6f4ee; color:#276749; }
+.badge-male       { background:#ebf8ff; color:#2b6cb0; }
+.badge-female     { background:#fff0f6; color:#b83280; }
+.badge-team-haeng { background:#e6f4ee; color:#276749; }
+.badge-team-byeok { background:#f0ebff; color:#6b46c1; }
+.badge-team-siksa { background:#fff3e0; color:#b7791f; }
 
-/* ── Modal ── */
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:16px; }
 .modal-overlay.open { display:flex; }
 .modal-box { background:white; border-radius:20px; overflow:hidden; max-width:340px; width:100%; box-shadow:0 24px 64px rgba(0,0,0,0.4); }
@@ -163,11 +155,10 @@ td.c { text-align:center; }
 
 <header>
   <h1>2026년 53교구 강원도 국내전도</h1>
-  <p class="subtitle" id="headerSubtitle">전체 41명 · 형제 20명 · 자매 21명</p>
+  <p class="subtitle" id="headerSubtitle">전체 40명 · 형제 20명 · 자매 20명</p>
 </header>
 
 <div class="container">
-  <!-- 검색/필터 -->
   <div class="search-box">
     <div class="search-row">
       <div class="search-input-wrap">
@@ -190,23 +181,30 @@ td.c { text-align:center; }
         <button class="chip" data-gender="형제" onclick="setGender('형제')">형제</button>
         <button class="chip female" data-gender="자매" onclick="setGender('자매')">자매</button>
       </div>
+      <div class="filter-divider"></div>
+      <span class="filter-label">사역팀</span>
+      <div class="chip-group" id="teamChips">
+        <button class="chip active" data-team="all" onclick="setTeam('all')">전체</button>
+        <button class="chip" data-team="행사팀" onclick="setTeam('행사팀')">행사팀</button>
+        <button class="chip byeok" data-team="벽화팀" onclick="setTeam('벽화팀')">벽화팀</button>
+        <button class="chip siksa" data-team="식사팀" onclick="setTeam('식사팀')">식사팀</button>
+      </div>
     </div>
   </div>
 
-  <!-- 통계 요약 -->
   <div class="stats-section">
     <div class="stats-top">
       <div class="stat-card">
         <div class="stat-icon">👥</div>
-        <div class="stat-info"><span class="stat-num" id="statTotal">43</span><span class="stat-label">전체</span></div>
+        <div class="stat-info"><span class="stat-num" id="statTotal">40</span><span class="stat-label">전체</span></div>
       </div>
       <div class="stat-card male">
         <div class="stat-icon">🙋</div>
-        <div class="stat-info"><span class="stat-num" id="statMale">21</span><span class="stat-label">형제</span></div>
+        <div class="stat-info"><span class="stat-num" id="statMale">20</span><span class="stat-label">형제</span></div>
       </div>
       <div class="stat-card female">
         <div class="stat-icon">🙋‍♀️</div>
-        <div class="stat-info"><span class="stat-num" id="statFemale">22</span><span class="stat-label">자매</span></div>
+        <div class="stat-info"><span class="stat-num" id="statFemale">20</span><span class="stat-label">자매</span></div>
       </div>
     </div>
     <div class="year-breakdown">
@@ -215,15 +213,12 @@ td.c { text-align:center; }
     </div>
   </div>
 
-  <!-- 결과 헤더 -->
   <div class="results-header">
-    <div class="results-count" id="resultsCount"><span>43</span>명 표시 중</div>
+    <div class="results-count" id="resultsCount"><span>40</span>명 표시 중</div>
   </div>
 
-  <!-- 카드 뷰 -->
   <div id="cardView" class="card-grid"></div>
 
-  <!-- 목록 뷰 -->
   <div id="listView" class="table-wrap" style="display:none">
     <table>
       <thead><tr>
@@ -231,19 +226,18 @@ td.c { text-align:center; }
         <th>이름</th>
         <th class="c">또래</th>
         <th class="c">성별</th>
+        <th class="c">사역팀</th>
       </tr></thead>
       <tbody id="listBody"></tbody>
     </table>
   </div>
 
-  <!-- 결과 없음 -->
   <div id="noResults" class="no-results" style="display:none">
     <div class="nr-icon">🔍</div>
     <p>검색 결과가 없습니다.</p>
   </div>
 </div>
 
-<!-- 사진 모달 -->
 <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
     <div class="modal-photo-wrap">
@@ -262,59 +256,64 @@ td.c { text-align:center; }
 
 <script>
 const MEMBERS = [
-  {name:"강다은",  year:"97", gender:"자매", photo:"photos/image3.png"},
-  {name:"강단영",  year:"95", gender:"자매", photo:"photos/image11.png"},
-  {name:"강병욱",  year:"96", gender:"형제", photo:"photos/image38.png"},
-  {name:"강지수",  year:"95", gender:"형제", photo:"photos/image37.png"},
-  {name:"김가연",  year:"97", gender:"형제", photo:"photos/image31.png"},
-  {name:"김계령",  year:"97", gender:"자매", photo:"photos/image26.png"},
-  {name:"김규민",  year:"95", gender:"형제", photo:"photos/image35.png"},
-  {name:"김남주",  year:"00", gender:"형제", photo:"photos/image15.png"},
-  {name:"김민제",  year:"97", gender:"형제", photo:"photos/image29.png"},
-  {name:"김준구",  year:"97", gender:"형제", photo:"photos/image23.png"},
-  {name:"김지혜",  year:"95", gender:"자매", photo:"photos/image8.png"},
-  {name:"김해인",  year:"99", gender:"자매", photo:"photos/image39.png"},
-  {name:"김현아",  year:"97", gender:"자매", photo:"photos/image25.png"},
-  {name:"문혜진",  year:"99", gender:"자매", photo:"photos/image32.png"},
-  {name:"박동현",  year:"95", gender:"형제", photo:"photos/image34.png"},
-  {name:"박지수",  year:"98", gender:"자매", photo:"photos/image6.png"},
-  {name:"서지은",  year:"99", gender:"자매", photo:"photos/image40.png"},
-  {name:"신이삭",  year:"96", gender:"형제", photo:"photos/image28.png"},
-  {name:"신향",    year:"97", gender:"자매", photo:"photos/image1.png"},
-  {name:"신현우",  year:"95", gender:"형제", photo:"photos/image20.png"},
-  {name:"신현욱",  year:"99", gender:"형제", photo:"photos/image4.png"},
-  {name:"안주현",  year:"98", gender:"자매", photo:"photos/image17.png"},
-  {name:"양혜정",  year:"97", gender:"자매", photo:"photos/image27.png"},
-  {name:"유진영",  year:"98", gender:"자매", photo:"photos/image14.png"},
-  {name:"윤빈",    year:"95", gender:"형제", photo:"photos/image24.png"},
-  {name:"이경은",  year:"99", gender:"자매", photo:"photos/image18.png"},
-  {name:"이성하",  year:"98", gender:"형제", photo:"photos/image22.png"},
-  {name:"이세인",  year:"97", gender:"자매", photo:"photos/image16.png"},
-  {name:"이예나",  year:"94", gender:"자매", photo:"photos/image7.png"},
-  {name:"이정한",  year:"00", gender:"형제", photo:"photos/image36.png"},
-  {name:"이종원",  year:"98", gender:"형제", photo:"photos/image10.png"},
-  {name:"이호경",  year:"99", gender:"자매", photo:"photos/image43.png"},
-  {name:"인장호",  year:"96", gender:"형제", photo:"photos/image21.png"},
-  {name:"장유신",  year:"99", gender:"형제", photo:"photos/image30.png"},
-  {name:"정서영",  year:"00", gender:"자매", photo:"photos/image5.png"},
-  {name:"지예광",  year:"98", gender:"형제", photo:"photos/image9.png"},
-  {name:"최각규",  year:"95", gender:"형제", photo:"photos/image19.png"},
-  {name:"최현정",  year:"95", gender:"자매", photo:"photos/image12.png"},
-  {name:"홍석희",  year:"97", gender:"자매", photo:"photos/image13.png"},
-  {name:"홍윤서",  year:"00", gender:"형제", photo:"photos/image41.png"},
-  {name:"홍은경",  year:"94", gender:"자매", photo:"photos/image2.png"},
+  {name:"강다은",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image3.png"},
+  {name:"강단영",  year:"95", gender:"자매", team:"행사팀", photo:"photos/image11.png"},
+  {name:"강병욱",  year:"96", gender:"형제", team:"행사팀", photo:"photos/image38.png"},
+  {name:"강지수",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image37.png"},
+  {name:"김가연",  year:"97", gender:"형제", team:"행사팀", photo:"photos/image31.png"},
+  {name:"김계령",  year:"97", gender:"자매", team:"벽화팀", photo:"photos/image26.png"},
+  {name:"김규민",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image35.png"},
+  {name:"김남주",  year:"00", gender:"형제", team:"식사팀", photo:"photos/image15.png"},
+  {name:"김민제",  year:"97", gender:"형제", team:"행사팀", photo:"photos/image29.png"},
+  {name:"김준구",  year:"97", gender:"형제", team:"식사팀", photo:"photos/image23.png"},
+  {name:"김지혜",  year:"95", gender:"자매", team:"행사팀", photo:"photos/image8.png"},
+  {name:"김해인",  year:"99", gender:"자매", team:"식사팀", photo:"photos/image39.png"},
+  {name:"김현아",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image25.png"},
+  {name:"문혜진",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image32.png"},
+  {name:"박동현",  year:"95", gender:"형제", team:"벽화팀", photo:"photos/image34.png"},
+  {name:"박지수",  year:"98", gender:"자매", team:"행사팀", photo:"photos/image6.png"},
+  {name:"서지은",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image40.png"},
+  {name:"신이삭",  year:"96", gender:"형제", team:"벽화팀", photo:"photos/image28.png"},
+  {name:"신향",    year:"97", gender:"자매", team:"벽화팀", photo:"photos/image1.png"},
+  {name:"신현우",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image20.png"},
+  {name:"신현욱",  year:"99", gender:"형제", team:"행사팀", photo:"photos/image4.png"},
+  {name:"안주현",  year:"98", gender:"자매", team:"행사팀", photo:"photos/image17.png"},
+  {name:"양혜정",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image27.png"},
+  {name:"유진영",  year:"98", gender:"자매", team:"식사팀", photo:"photos/image14.png"},
+  {name:"윤빈",    year:"95", gender:"형제", team:"행사팀", photo:"photos/image24.png"},
+  {name:"이경은",  year:"99", gender:"자매", team:"식사팀", photo:"photos/image18.png"},
+  {name:"이성하",  year:"98", gender:"형제", team:"벽화팀", photo:"photos/image22.png"},
+  {name:"이세인",  year:"97", gender:"자매", team:"식사팀", photo:"photos/image16.png"},
+  {name:"이예나",  year:"94", gender:"자매", team:"벽화팀", photo:"photos/image7.png"},
+  {name:"이정한",  year:"00", gender:"형제", team:"행사팀", photo:"photos/image36.png"},
+  {name:"이종원",  year:"98", gender:"형제", team:"행사팀", photo:"photos/image10.png"},
+  {name:"이호경",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image43.png"},
+  {name:"인장호",  year:"96", gender:"형제", team:"벽화팀", photo:"photos/image21.png"},
+  {name:"장유신",  year:"99", gender:"형제", team:"행사팀", photo:"photos/image30.png"},
+  {name:"정서영",  year:"00", gender:"자매", team:"행사팀", photo:"photos/image5.png"},
+  {name:"지예광",  year:"98", gender:"형제", team:"행사팀", photo:"photos/image9.png"},
+  {name:"최각규",  year:"95", gender:"형제", team:"식사팀", photo:"photos/image19.png"},
+  {name:"홍석희",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image13.png"},
+  {name:"홍윤서",  year:"00", gender:"형제", team:"행사팀", photo:"photos/image41.png"},
+  {name:"홍은경",  year:"94", gender:"자매", team:"행사팀", photo:"photos/image2.png"},
 ];
 
 const YEARS = ["94","95","96","97","98","99","00"];
 const COLORS_M = ["#2b6cb0","#2c7a7b","#276749","#553c9a","#c05621","#5a67d8"];
 const COLORS_F = ["#d53f8c","#c05621","#9c4221","#702459","#2f855a","#b7791f"];
 
-let state = { search:"", year:"all", gender:"all", view:"card" };
+let state = { search:"", year:"all", gender:"all", team:"all", view:"card" };
 
 function avatarColor(name, gender) {
   let h = 0;
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
   return gender === "자매" ? COLORS_F[h % COLORS_F.length] : COLORS_M[h % COLORS_M.length];
+}
+
+function teamBadgeClass(team) {
+  if (team === "벽화팀") return "badge-team-byeok";
+  if (team === "식사팀") return "badge-team-siksa";
+  return "badge-team-haeng";
 }
 
 function buildYearChips() {
@@ -334,6 +333,11 @@ function setGender(g) {
   document.querySelectorAll('#genderChips .chip').forEach(c => c.classList.toggle('active', c.dataset.gender === g));
   doFilter();
 }
+function setTeam(t) {
+  state.team = t;
+  document.querySelectorAll('#teamChips .chip').forEach(c => c.classList.toggle('active', c.dataset.team === t));
+  doFilter();
+}
 function setView(v) {
   state.view = v;
   document.getElementById('btnCard').classList.toggle('active', v === 'card');
@@ -344,10 +348,11 @@ function syncYearChips() {
   document.querySelectorAll('#yearChips .chip').forEach(c => c.classList.toggle('active', c.dataset.year === state.year));
 }
 function resetFilter() {
-  state.search = ""; state.year = "all"; state.gender = "all";
+  state.search = ""; state.year = "all"; state.gender = "all"; state.team = "all";
   document.getElementById("searchInput").value = "";
   syncYearChips();
   document.querySelectorAll('#genderChips .chip').forEach(c => c.classList.toggle('active', c.dataset.gender === 'all'));
+  document.querySelectorAll('#teamChips .chip').forEach(c => c.classList.toggle('active', c.dataset.team === 'all'));
   doFilter();
 }
 function doFilter() {
@@ -363,12 +368,13 @@ function getFiltered() {
     if (q && !m.name.toLowerCase().includes(q)) return false;
     if (state.year !== "all" && m.year !== state.year) return false;
     if (state.gender !== "all" && m.gender !== state.gender) return false;
+    if (state.team !== "all" && m.team !== state.team) return false;
     return true;
   });
 }
 function updateHeader(filtered) {
   const total = filtered.length, male = filtered.filter(m => m.gender==="형제").length, female = filtered.filter(m => m.gender==="자매").length;
-  const isFiltered = state.search || state.year !== "all" || state.gender !== "all";
+  const isFiltered = state.search || state.year !== "all" || state.gender !== "all" || state.team !== "all";
   document.getElementById("headerSubtitle").textContent = isFiltered
     ? `검색결과 ${total}명 · 형제 ${male}명 · 자매 ${female}명`
     : `전체 ${total}명 · 형제 ${male}명 · 자매 ${female}명`;
@@ -413,6 +419,7 @@ function renderCard(m) {
       <div class="card-badges">
         <span class="badge badge-year">${m.year}년</span>
         <span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span>
+        <span class="badge ${teamBadgeClass(m.team)}">${m.team}</span>
       </div>
     </div>
   </div>`;
@@ -436,6 +443,7 @@ function renderListRow(m, idx) {
     </div></td>
     <td class="c"><span class="badge badge-year">${m.year}년</span></td>
     <td class="c"><span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span></td>
+    <td class="c"><span class="badge ${teamBadgeClass(m.team)}">${m.team}</span></td>
   </tr>`;
 }
 
@@ -473,7 +481,8 @@ function openModal(idx) {
   document.getElementById('modalName').textContent = m.name;
   document.getElementById('modalBadges').innerHTML =
     `<span class="badge badge-year">${m.year}년생</span>
-     <span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span>`;
+     <span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span>
+     <span class="badge ${teamBadgeClass(m.team)}">${m.team}</span>`;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -483,7 +492,6 @@ function closeModal() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// 초기화
 buildYearChips();
 doFilter();
 </script>
