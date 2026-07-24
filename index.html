@@ -48,6 +48,10 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .chip.byeok.active { background:#6b46c1; border-color:#6b46c1; color:white; }
 .chip.siksa:hover { border-color:#c05621; color:#c05621; }
 .chip.siksa.active { background:#c05621; border-color:#c05621; color:white; }
+.chip.dorm:hover { border-color:#2c7a7b; color:#2c7a7b; }
+.chip.dorm.active { background:#2c7a7b; border-color:#2c7a7b; color:white; }
+.chip.car:hover { border-color:#805ad5; color:#805ad5; }
+.chip.car.active { background:#805ad5; border-color:#805ad5; color:white; }
 .filter-divider { width:1px; background:#e2e8f0; align-self:stretch; margin:0 2px; flex-shrink:0; }
 
 .stats-section { margin-bottom:14px; }
@@ -103,7 +107,7 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .card-name { font-weight:700; font-size:0.97rem; margin-bottom:7px; color:#2d3748; }
 .card-badges { display:flex; justify-content:center; align-items:center; gap:4px; flex-wrap:wrap; }
 
-.table-wrap { background:white; border-radius:14px; box-shadow:0 1px 5px rgba(0,0,0,0.08); overflow:hidden; }
+.table-wrap { background:white; border-radius:14px; box-shadow:0 1px 5px rgba(0,0,0,0.08); overflow-x:auto; }
 table { width:100%; border-collapse:collapse; }
 thead th { background:#f7faf9; padding:10px 14px; text-align:left; font-size:0.78rem; font-weight:700; color:#718096; border-bottom:2px solid #e2e8f0; white-space:nowrap; }
 thead th.c { text-align:center; }
@@ -126,6 +130,8 @@ td.c { text-align:center; }
 .badge-team-haeng { background:#e6f4ee; color:#276749; }
 .badge-team-byeok { background:#f0ebff; color:#6b46c1; }
 .badge-team-siksa { background:#fff3e0; color:#b7791f; }
+.badge-dorm { background:#e6fffa; color:#2c7a7b; }
+.badge-car  { background:#f5f0ff; color:#805ad5; }
 
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; padding:16px; }
 .modal-overlay.open { display:flex; }
@@ -189,6 +195,12 @@ td.c { text-align:center; }
         <button class="chip byeok" data-team="벽화팀" onclick="setTeam('벽화팀')">벽화팀</button>
         <button class="chip siksa" data-team="식사팀" onclick="setTeam('식사팀')">식사팀</button>
       </div>
+      <div class="filter-divider"></div>
+      <span class="filter-label">숙소</span>
+      <div class="chip-group" id="dormChips"></div>
+      <div class="filter-divider"></div>
+      <span class="filter-label">차량</span>
+      <div class="chip-group" id="carChips"></div>
     </div>
   </div>
 
@@ -227,6 +239,8 @@ td.c { text-align:center; }
         <th class="c">또래</th>
         <th class="c">성별</th>
         <th class="c">사역팀</th>
+        <th class="c">숙소</th>
+        <th class="c">차량</th>
       </tr></thead>
       <tbody id="listBody"></tbody>
     </table>
@@ -256,51 +270,54 @@ td.c { text-align:center; }
 
 <script>
 const MEMBERS = [
-  {name:"강다은",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image3.png"},
-  {name:"강단영",  year:"95", gender:"자매", team:"행사팀", photo:"photos/image11.png"},
-  {name:"강병욱",  year:"96", gender:"형제", team:"행사팀", photo:"photos/image38.png"},
-  {name:"강지수",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image37.png"},
-  {name:"김가연",  year:"97", gender:"형제", team:"행사팀", photo:"photos/image31.png"},
-  {name:"김계령",  year:"97", gender:"자매", team:"벽화팀", photo:"photos/image26.png"},
-  {name:"김규민",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image35.png"},
-  {name:"김남주",  year:"00", gender:"형제", team:"식사팀", photo:"photos/image15.png"},
-  {name:"김민제",  year:"97", gender:"형제", team:"행사팀", photo:"photos/image29.png"},
-  {name:"김준구",  year:"97", gender:"형제", team:"식사팀", photo:"photos/image23.png"},
-  {name:"김지혜",  year:"95", gender:"자매", team:"행사팀", photo:"photos/image8.png"},
-  {name:"김해인",  year:"99", gender:"자매", team:"식사팀", photo:"photos/image39.png"},
-  {name:"김현아",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image25.png"},
-  {name:"문혜진",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image32.png"},
-  {name:"박동현",  year:"95", gender:"형제", team:"벽화팀", photo:"photos/image34.png"},
-  {name:"박지수",  year:"98", gender:"자매", team:"행사팀", photo:"photos/image6.png"},
-  {name:"서지은",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image40.png"},
-  {name:"신이삭",  year:"96", gender:"형제", team:"벽화팀", photo:"photos/image28.png"},
-  {name:"신향",    year:"97", gender:"자매", team:"벽화팀", photo:"photos/image1.png"},
-  {name:"신현우",  year:"95", gender:"형제", team:"행사팀", photo:"photos/image20.png"},
-  {name:"신현욱",  year:"99", gender:"형제", team:"행사팀", photo:"photos/image4.png"},
-  {name:"안주현",  year:"98", gender:"자매", team:"행사팀", photo:"photos/image17.png"},
-  {name:"양혜정",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image27.png"},
-  {name:"유진영",  year:"98", gender:"자매", team:"식사팀", photo:"photos/image14.png"},
-  {name:"윤빈",    year:"95", gender:"형제", team:"행사팀", photo:"photos/image24.png"},
-  {name:"이경은",  year:"99", gender:"자매", team:"식사팀", photo:"photos/image18.png"},
-  {name:"이성하",  year:"98", gender:"형제", team:"벽화팀", photo:"photos/image22.png"},
-  {name:"이세인",  year:"97", gender:"자매", team:"식사팀", photo:"photos/image16.png"},
-  {name:"이예나",  year:"94", gender:"자매", team:"벽화팀", photo:"photos/image7.png"},
-  {name:"이정한",  year:"00", gender:"형제", team:"행사팀", photo:"photos/image36.png"},
-  {name:"이종원",  year:"98", gender:"형제", team:"행사팀", photo:"photos/image10.png"},
-  {name:"이호경",  year:"99", gender:"자매", team:"벽화팀", photo:"photos/image43.png"},
-  {name:"인장호",  year:"96", gender:"형제", team:"벽화팀", photo:"photos/image21.png"},
-  {name:"장유신",  year:"99", gender:"형제", team:"행사팀", photo:"photos/image30.png"},
-  {name:"지예광",  year:"98", gender:"형제", team:"행사팀", photo:"photos/image9.png"},
-  {name:"홍석희",  year:"97", gender:"자매", team:"행사팀", photo:"photos/image13.png"},
-  {name:"홍윤서",  year:"00", gender:"형제", team:"행사팀", photo:"photos/image41.png"},
-  {name:"홍은경",  year:"94", gender:"자매", team:"행사팀", photo:"photos/image2.png"},
+  {name:"강다은",  year:"97", gender:"자매", team:"행사팀", dorm:"216", car:"4인 1호차(윤빈)",   photo:"photos/image3.png"},
+  {name:"강단영",  year:"95", gender:"자매", team:"행사팀", dorm:"309", car:"4인 1호차(윤빈)",   photo:"photos/image11.png"},
+  {name:"강병욱",  year:"96", gender:"형제", team:"행사팀", dorm:"306", car:"4인 1호차(윤빈)",   photo:"photos/image38.png"},
+  {name:"강지수",  year:"95", gender:"형제", team:"행사팀", dorm:"306", car:"9인 1호차(현광섭)", photo:"photos/image37.png"},
+  {name:"김가연",  year:"97", gender:"형제", team:"행사팀", dorm:"214", car:"4인 2호차(이종원)", photo:"photos/image31.png"},
+  {name:"김계령",  year:"97", gender:"자매", team:"벽화팀", dorm:"308", car:"4인 2호차(이종원)", photo:"photos/image26.png"},
+  {name:"김규민",  year:"95", gender:"형제", team:"행사팀", dorm:"307", car:"9인 1호차(현광섭)", photo:"photos/image35.png"},
+  {name:"김남주",  year:"00", gender:"형제", team:"식사팀", dorm:"213", car:"4인 3호차(유진영)", photo:"photos/image15.png"},
+  {name:"김민제",  year:"97", gender:"형제", team:"행사팀", dorm:"215", car:"4인 3호차(유진영)", photo:"photos/image29.png"},
+  {name:"김준구",  year:"97", gender:"형제", team:"식사팀", dorm:"306", car:"화물(김준구)",     photo:"photos/image23.png"},
+  {name:"김지혜",  year:"95", gender:"자매", team:"행사팀", dorm:"310", car:"4인 2호차(이종원)", photo:"photos/image8.png"},
+  {name:"김해인",  year:"99", gender:"자매", team:"식사팀", dorm:"309", car:"9인 1호차(현광섭)", photo:"photos/image39.png"},
+  {name:"김현아",  year:"97", gender:"자매", team:"행사팀", dorm:"309", car:"9인 1호차(현광섭)", photo:"photos/image25.png"},
+  {name:"문혜진",  year:"99", gender:"자매", team:"벽화팀", dorm:"310", car:"9인 1호차(현광섭)", photo:"photos/image32.png"},
+  {name:"박동현",  year:"95", gender:"형제", team:"벽화팀", dorm:"213", car:"9인 1호차(현광섭)", photo:"photos/image34.png"},
+  {name:"박지수",  year:"98", gender:"자매", team:"행사팀", dorm:"310", car:"9인 1호차(현광섭)", photo:"photos/image6.png"},
+  {name:"서지은",  year:"99", gender:"자매", team:"벽화팀", dorm:"308", car:"9인 2호차(이현준)", photo:"photos/image40.png"},
+  {name:"신이삭",  year:"96", gender:"형제", team:"벽화팀", dorm:"307", car:"9인 1호차(현광섭)", photo:"photos/image28.png"},
+  {name:"신향",    year:"97", gender:"자매", team:"벽화팀", dorm:"310", car:"9인 2호차(이현준)", photo:"photos/image1.png"},
+  {name:"신현우",  year:"95", gender:"형제", team:"행사팀", dorm:"214", car:"9인 2호차(이현준)", photo:"photos/image20.png"},
+  {name:"신현욱",  year:"99", gender:"형제", team:"행사팀", dorm:"306", car:"9인 2호차(이현준)", photo:"photos/image4.png"},
+  {name:"안주현",  year:"98", gender:"자매", team:"행사팀", dorm:"309", car:"9인 2호차(이현준)", photo:"photos/image17.png"},
+  {name:"양혜정",  year:"97", gender:"자매", team:"행사팀", dorm:"216", car:"9인 2호차(이현준)", photo:"photos/image27.png"},
+  {name:"유진영",  year:"98", gender:"자매", team:"식사팀", dorm:"308", car:"4인 3호차(유진영)", photo:"photos/image14.png"},
+  {name:"윤빈",    year:"95", gender:"형제", team:"행사팀", dorm:"215", car:"4인 1호차(윤빈)",   photo:"photos/image24.png"},
+  {name:"이경은",  year:"99", gender:"자매", team:"식사팀", dorm:"216", car:"9인 3호차(민경기)", photo:"photos/image18.png"},
+  {name:"이성하",  year:"98", gender:"형제", team:"벽화팀", dorm:"214", car:"9인 2호차(이현준)", photo:"photos/image22.png"},
+  {name:"이세인",  year:"97", gender:"자매", team:"식사팀", dorm:"308", car:"4인 3호차(유진영)", photo:"photos/image16.png"},
+  {name:"이예나",  year:"94", gender:"자매", team:"벽화팀", dorm:"216", car:"9인 3호차(민경기)", photo:"photos/image7.png"},
+  {name:"이정한",  year:"00", gender:"형제", team:"행사팀", dorm:"307", car:"9인 2호차(이현준)", photo:"photos/image36.png"},
+  {name:"이종원",  year:"98", gender:"형제", team:"행사팀", dorm:"306", car:"4인 2호차(이종원)", photo:"photos/image10.png"},
+  {name:"이호경",  year:"99", gender:"자매", team:"벽화팀", dorm:"310", car:"9인 3호차(민경기)", photo:"photos/image43.png"},
+  {name:"인장호",  year:"96", gender:"형제", team:"벽화팀", dorm:"213", car:"9인 3호차(민경기)", photo:"photos/image21.png"},
+  {name:"장유신",  year:"99", gender:"형제", team:"행사팀", dorm:"307", car:"9인 3호차(민경기)", photo:"photos/image30.png"},
+  {name:"지예광",  year:"98", gender:"형제", team:"행사팀", dorm:"307", car:"9인 3호차(민경기)", photo:"photos/image9.png"},
+  {name:"홍석희",  year:"97", gender:"자매", team:"행사팀", dorm:"309", car:"9인 3호차(민경기)", photo:"photos/image13.png"},
+  {name:"홍윤서",  year:"00", gender:"형제", team:"행사팀", dorm:"215", car:"9인 3호차(민경기)", photo:"photos/image41.png"},
+  {name:"홍은경",  year:"94", gender:"자매", team:"행사팀", dorm:"308", car:"화물(김준구)",     photo:"photos/image2.png"},
 ];
+
+const DORMS = ["213","214","215","216","306","307","308","309","310"];
+const CARS = ["4인 1호차(윤빈)","4인 2호차(이종원)","4인 3호차(유진영)","9인 1호차(현광섭)","9인 2호차(이현준)","9인 3호차(민경기)","화물(김준구)"];
 
 const YEARS = ["94","95","96","97","98","99","00"];
 const COLORS_M = ["#2b6cb0","#2c7a7b","#276749","#553c9a","#c05621","#5a67d8"];
 const COLORS_F = ["#d53f8c","#c05621","#9c4221","#702459","#2f855a","#b7791f"];
 
-let state = { search:"", year:"all", gender:"all", team:"all", view:"card" };
+let state = { search:"", year:"all", gender:"all", team:"all", dorm:"all", car:"all", view:"card" };
 
 function avatarColor(name, gender) {
   let h = 0;
@@ -320,6 +337,18 @@ function buildYearChips() {
   YEARS.forEach(y => { html += `<button class="chip" data-year="${y}" onclick="setYear('${y}')">${y}년</button>`; });
   wrap.innerHTML = html;
 }
+function buildDormChips() {
+  const wrap = document.getElementById("dormChips");
+  let html = '<button class="chip dorm active" data-dorm="all" onclick="setDorm(\'all\')">전체</button>';
+  DORMS.forEach(d => { html += `<button class="chip dorm" data-dorm="${d}" onclick="setDorm('${d}')">${d}호</button>`; });
+  wrap.innerHTML = html;
+}
+function buildCarChips() {
+  const wrap = document.getElementById("carChips");
+  let html = '<button class="chip car active" data-car="all" onclick="setCar(\'all\')">전체</button>';
+  CARS.forEach(c => { html += `<button class="chip car" data-car="${escAttr(c)}" onclick="setCar('${escAttr(c)}')">${c}</button>`; });
+  wrap.innerHTML = html;
+}
 
 function setYear(y) {
   state.year = (state.year === y && y !== "all") ? "all" : y;
@@ -336,6 +365,16 @@ function setTeam(t) {
   document.querySelectorAll('#teamChips .chip').forEach(c => c.classList.toggle('active', c.dataset.team === t));
   doFilter();
 }
+function setDorm(d) {
+  state.dorm = d;
+  document.querySelectorAll('#dormChips .chip').forEach(c => c.classList.toggle('active', c.dataset.dorm === d));
+  doFilter();
+}
+function setCar(c) {
+  state.car = c;
+  document.querySelectorAll('#carChips .chip').forEach(el => el.classList.toggle('active', el.dataset.car === c));
+  doFilter();
+}
 function setView(v) {
   state.view = v;
   document.getElementById('btnCard').classList.toggle('active', v === 'card');
@@ -346,11 +385,13 @@ function syncYearChips() {
   document.querySelectorAll('#yearChips .chip').forEach(c => c.classList.toggle('active', c.dataset.year === state.year));
 }
 function resetFilter() {
-  state.search = ""; state.year = "all"; state.gender = "all"; state.team = "all";
+  state.search = ""; state.year = "all"; state.gender = "all"; state.team = "all"; state.dorm = "all"; state.car = "all";
   document.getElementById("searchInput").value = "";
   syncYearChips();
   document.querySelectorAll('#genderChips .chip').forEach(c => c.classList.toggle('active', c.dataset.gender === 'all'));
   document.querySelectorAll('#teamChips .chip').forEach(c => c.classList.toggle('active', c.dataset.team === 'all'));
+  document.querySelectorAll('#dormChips .chip').forEach(c => c.classList.toggle('active', c.dataset.dorm === 'all'));
+  document.querySelectorAll('#carChips .chip').forEach(c => c.classList.toggle('active', c.dataset.car === 'all'));
   doFilter();
 }
 function doFilter() {
@@ -367,12 +408,14 @@ function getFiltered() {
     if (state.year !== "all" && m.year !== state.year) return false;
     if (state.gender !== "all" && m.gender !== state.gender) return false;
     if (state.team !== "all" && m.team !== state.team) return false;
+    if (state.dorm !== "all" && m.dorm !== state.dorm) return false;
+    if (state.car !== "all" && m.car !== state.car) return false;
     return true;
   });
 }
 function updateHeader(filtered) {
   const total = filtered.length, male = filtered.filter(m => m.gender==="형제").length, female = filtered.filter(m => m.gender==="자매").length;
-  const isFiltered = state.search || state.year !== "all" || state.gender !== "all" || state.team !== "all";
+  const isFiltered = state.search || state.year !== "all" || state.gender !== "all" || state.team !== "all" || state.dorm !== "all" || state.car !== "all";
   document.getElementById("headerSubtitle").textContent = isFiltered
     ? `검색결과 ${total}명 · 형제 ${male}명 · 자매 ${female}명`
     : `전체 ${total}명 · 형제 ${male}명 · 자매 ${female}명`;
@@ -418,6 +461,8 @@ function renderCard(m) {
         <span class="badge badge-year">${m.year}년</span>
         <span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span>
         <span class="badge ${teamBadgeClass(m.team)}">${m.team}</span>
+        <span class="badge badge-dorm">${m.dorm}호</span>
+        <span class="badge badge-car">${m.car}</span>
       </div>
     </div>
   </div>`;
@@ -442,6 +487,8 @@ function renderListRow(m, idx) {
     <td class="c"><span class="badge badge-year">${m.year}년</span></td>
     <td class="c"><span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span></td>
     <td class="c"><span class="badge ${teamBadgeClass(m.team)}">${m.team}</span></td>
+    <td class="c"><span class="badge badge-dorm">${m.dorm}호</span></td>
+    <td class="c"><span class="badge badge-car">${m.car}</span></td>
   </tr>`;
 }
 
@@ -480,7 +527,9 @@ function openModal(idx) {
   document.getElementById('modalBadges').innerHTML =
     `<span class="badge badge-year">${m.year}년생</span>
      <span class="badge ${isFemale?'badge-female':'badge-male'}">${m.gender}</span>
-     <span class="badge ${teamBadgeClass(m.team)}">${m.team}</span>`;
+     <span class="badge ${teamBadgeClass(m.team)}">${m.team}</span>
+     <span class="badge badge-dorm">${m.dorm}호</span>
+     <span class="badge badge-car">${m.car}</span>`;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -491,6 +540,8 @@ function closeModal() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 buildYearChips();
+buildDormChips();
+buildCarChips();
 doFilter();
 </script>
 </body>
