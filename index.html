@@ -36,8 +36,16 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .view-btn.active { background:#276749; border-color:#276749; color:white; font-weight:600; }
 .view-btn:not(.active):hover { border-color:#276749; color:#276749; }
 
-.filter-row { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-.filter-label { font-size:0.78rem; color:#718096; font-weight:700; white-space:nowrap; }
+.filter-row { margin-top:14px; display:flex; flex-direction:column; gap:2px; }
+.filter-group { display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:7px 8px; border-radius:8px; }
+.filter-group:nth-child(odd) { background:#f7faf9; }
+.filter-label { flex-shrink:0; min-width:58px; text-align:center; font-size:0.74rem; font-weight:800; color:white; padding:5px 10px; border-radius:7px; letter-spacing:0.2px; white-space:nowrap; }
+.filter-label.lbl-year   { background:#276749; }
+.filter-label.lbl-gender { background:#97266d; }
+.filter-label.lbl-team   { background:#6b46c1; }
+.filter-label.lbl-dorm   { background:#2c7a7b; }
+.filter-label.lbl-car    { background:#4c51bf; }
+.filter-label.lbl-wave   { background:#c53030; }
 .chip-group { display:flex; gap:5px; flex-wrap:wrap; }
 .chip { padding:5px 12px; border-radius:999px; border:1.5px solid #cbd5e0; background:white; font-family:inherit; font-size:0.79rem; cursor:pointer; color:#4a5568; transition:all 0.15s; white-space:nowrap; -webkit-appearance:none; }
 .chip:hover { border-color:#38a169; color:#276749; }
@@ -54,7 +62,6 @@ header .subtitle { margin-top:5px; font-size:0.83rem; opacity:0.82; position:rel
 .chip.car.active { background:#805ad5; border-color:#805ad5; color:white; }
 .chip.late:hover { border-color:#c53030; color:#c53030; }
 .chip.late.active { background:#c53030; border-color:#c53030; color:white; }
-.filter-divider { width:1px; background:#e2e8f0; align-self:stretch; margin:0 2px; flex-shrink:0; }
 
 .stats-section { margin-bottom:14px; }
 .stats-top { display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
@@ -181,34 +188,41 @@ td.c { text-align:center; }
       </div>
     </div>
     <div class="filter-row">
-      <span class="filter-label">또래</span>
-      <div class="chip-group" id="yearChips"></div>
-      <div class="filter-divider"></div>
-      <span class="filter-label">성별</span>
-      <div class="chip-group" id="genderChips">
-        <button class="chip active" data-gender="all" onclick="setGender('all')">전체</button>
-        <button class="chip" data-gender="형제" onclick="setGender('형제')">형제</button>
-        <button class="chip female" data-gender="자매" onclick="setGender('자매')">자매</button>
+      <div class="filter-group">
+        <span class="filter-label lbl-year">또래</span>
+        <div class="chip-group" id="yearChips"></div>
       </div>
-      <div class="filter-divider"></div>
-      <span class="filter-label">사역팀</span>
-      <div class="chip-group" id="teamChips">
-        <button class="chip active" data-team="all" onclick="setTeam('all')">전체</button>
-        <button class="chip" data-team="행사팀" onclick="setTeam('행사팀')">행사팀</button>
-        <button class="chip byeok" data-team="벽화팀" onclick="setTeam('벽화팀')">벽화팀</button>
-        <button class="chip siksa" data-team="식사팀" onclick="setTeam('식사팀')">식사팀</button>
+      <div class="filter-group">
+        <span class="filter-label lbl-gender">성별</span>
+        <div class="chip-group" id="genderChips">
+          <button class="chip active" data-gender="all" onclick="setGender('all')">전체</button>
+          <button class="chip" data-gender="형제" onclick="setGender('형제')">형제</button>
+          <button class="chip female" data-gender="자매" onclick="setGender('자매')">자매</button>
+        </div>
       </div>
-      <div class="filter-divider"></div>
-      <span class="filter-label">숙소</span>
-      <div class="chip-group" id="dormChips"></div>
-      <div class="filter-divider"></div>
-      <span class="filter-label">차량</span>
-      <div class="chip-group" id="carChips"></div>
-      <div class="filter-divider"></div>
-      <span class="filter-label">구분</span>
-      <div class="chip-group" id="waveChips">
-        <button class="chip active" data-wave="all" onclick="setWave('all')">전체</button>
-        <button class="chip late" data-wave="후발대" onclick="setWave('후발대')">후발대</button>
+      <div class="filter-group">
+        <span class="filter-label lbl-team">사역팀</span>
+        <div class="chip-group" id="teamChips">
+          <button class="chip active" data-team="all" onclick="setTeam('all')">전체</button>
+          <button class="chip" data-team="행사팀" onclick="setTeam('행사팀')">행사팀</button>
+          <button class="chip byeok" data-team="벽화팀" onclick="setTeam('벽화팀')">벽화팀</button>
+          <button class="chip siksa" data-team="식사팀" onclick="setTeam('식사팀')">식사팀</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label lbl-dorm">숙소</span>
+        <div class="chip-group" id="dormChips"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label lbl-car">차량</span>
+        <div class="chip-group" id="carChips"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label lbl-wave">구분</span>
+        <div class="chip-group" id="waveChips">
+          <button class="chip active" data-wave="all" onclick="setWave('all')">전체</button>
+          <button class="chip late" data-wave="후발대" onclick="setWave('후발대')">후발대</button>
+        </div>
       </div>
     </div>
   </div>
